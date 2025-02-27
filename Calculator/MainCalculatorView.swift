@@ -12,13 +12,30 @@ struct MainCalculatorView: View {
     @State var currentComputation: String = ""
     @State var mainResult: String = "0"
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack {
+            primaryBackgroundColor.ignoresSafeArea()
+            VStack {
+                
+                SunMoonView(lightMode: lightMode)
+                    .onTapGesture {
+                        withAnimation {
+                            lightMode.toggle()
+                        }
+                    }
+                
+                Spacer()
+                
+                ComputationView(currentComputation: currentComputation, mainResult: mainResult)
+                Spacer()
+                
+               
+                CalcsButtonView(currentComputation: $currentComputation, mainResult: $mainResult)
+                
+            }
+            .padding()
         }
-        .padding()
+        .environment(\.colorScheme,
+                      lightMode ? .light : .dark)
     }
 }
 
