@@ -18,6 +18,10 @@ struct ComputationView: View {
                 Text(currentComputation)
                     .foregroundColor(foregroundDigitsColor)
                     .lineLimit(1)
+                
+                    .font(UIDevice.isIpad ? .largeTitle : .body)
+                
+                
             }
             .minimumScaleFactor(0.1)
             

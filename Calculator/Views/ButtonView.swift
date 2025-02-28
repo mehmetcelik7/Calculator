@@ -12,6 +12,7 @@ struct ButtonView: View {
     
     let fgColor: Color
     let bgColor: Color
+    let width: CGFloat
     
     var systemImage: String? {
        let value = calcButton.rawValue
@@ -23,15 +24,21 @@ struct ButtonView: View {
         
         return value.contains("IMG") ? nil : value
     }
-    
-    let buttonDim: CGFloat = UIScreen.main.bounds.width / 5
+    var buttonDim: CGFloat {
+        UIDevice.isIpad ? width / 6 : width / 5
+    }
     var body: some View {
+        
         ZStack {
-            Text(text ?? "")
-            Image(systemName: systemImage ?? "")
+            if let text = text {
+                Text(text)
+            }
+            if let systemImage = systemImage {
+                Image(systemName: systemImage)
+            }
         }
-        .font(.title2)
-        .fontWeight(.semibold)
+        .font(UIDevice.isIpad ? .largeTitle : .title2)
+        .fontWeight(UIDevice.isIpad ? .heavy : .semibold)
         .frame(width: buttonDim, height: buttonDim)
         .foregroundColor(fgColor)
         .background(bgColor)
@@ -44,12 +51,12 @@ struct ButtonView: View {
     VStack {
         
        
-        ButtonView(calcButton: .undo, fgColor: foregroundDigitsColor, bgColor: buttonBackgroundColor)
-        ButtonView(calcButton: .negative, fgColor: foregroundDigitsColor, bgColor: buttonBackgroundColor)
+        ButtonView(calcButton: .undo, fgColor: foregroundDigitsColor, bgColor: buttonBackgroundColor, width: 375)
+        ButtonView(calcButton: .negative, fgColor: foregroundDigitsColor, bgColor: buttonBackgroundColor, width: 375)
         
-        ButtonView(calcButton: .one, fgColor: foregroundDigitsColor, bgColor: buttonBackgroundColor)
+        ButtonView(calcButton: .one, fgColor: foregroundDigitsColor, bgColor: buttonBackgroundColor, width: 375)
         
-        ButtonView(calcButton: .percent, fgColor: foregroundTopButtonsColor, bgColor: buttonBackgroundColor)
-        ButtonView(calcButton: .add, fgColor: foregroundRightButttonsColor, bgColor: buttonBackgroundColor)
+        ButtonView(calcButton: .percent, fgColor: foregroundTopButtonsColor, bgColor: buttonBackgroundColor, width: 375)
+        ButtonView(calcButton: .add, fgColor: foregroundRightButttonsColor, bgColor: buttonBackgroundColor, width: 375)
     }
 }
